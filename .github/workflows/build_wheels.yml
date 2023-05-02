@@ -22,11 +22,6 @@ jobs:
       - uses: actions/checkout@v3
         with:
           submodules: true
-      - name: Install rust toolchain
-        uses: actions-rs/toolchain@v1
-        with:
-            toolchain: stable
-            default: true
       - name: Set up QEMU
         if: runner.os == 'Linux'
         uses: docker/setup-qemu-action@v2
@@ -34,7 +29,7 @@ jobs:
           platforms: linux/arm64
 
       - name: Build wheels
-        run: cd python-driver && PATH=$PATH:$HOME/.cargo/bin pipx run cibuildwheel==2.12.1
+        run: apt-get update && apt-get install -y libssl-dev && cd python-driver && pipx run cibuildwheel==2.12.1
 
       - uses: actions/upload-artifact@v3
         with:
