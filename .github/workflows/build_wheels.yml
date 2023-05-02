@@ -14,6 +14,7 @@ jobs:
       CIBW_SKIP: "*musllinux*"
       CIBW_ARCHS_MACOS: x86_64 arm64 universal2
       CIBW_ARCHS_LINUX: i686
+      CIBW_ENVIRONMENT: PATH="$HOME/.cargo/bin:$PATH"
       CIBW_TEST_REQUIRES: nose mock pure-sasl eventlet
       CIBW_TEST_COMMAND: echo "wheel is installed"
     steps:
