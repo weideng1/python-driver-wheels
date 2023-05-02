@@ -15,7 +15,7 @@ jobs:
       CIBW_ARCHS_MACOS: x86_64 arm64 universal2
       CIBW_ARCHS_LINUX: i686
       CIBW_ENVIRONMENT: PATH="$HOME/.cargo/bin:$PATH"
-      CIBW_BEFORE_TEST: curl https://sh.rustup.rs -sSf | bash -s -- -y
+      CIBW_BEFORE_TEST: curl https://sh.rustup.rs -sSf | bash -s -- -y && apt-get update && apt-get install -y libssl-dev
       CIBW_TEST_REQUIRES: nose mock pure-sasl eventlet
       CIBW_TEST_COMMAND: echo "wheel is installed"
     steps:
@@ -29,7 +29,7 @@ jobs:
           platforms: linux/arm64
 
       - name: Build wheels
-        run: sudo apt-get update && sudo apt-get install -y libssl-dev && cd python-driver && pipx run cibuildwheel==2.12.1
+        run: cd python-driver && pipx run cibuildwheel==2.12.1
 
       - uses: actions/upload-artifact@v3
         with:
