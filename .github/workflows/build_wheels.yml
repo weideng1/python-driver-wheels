@@ -8,12 +8,12 @@ jobs:
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
-        os: [ubuntu-20.04, windows-2019, macos-11]
+        os: [ubuntu-20.04]
     env:
       CIBW_BUILD: cp37-* cp38-* cp39-* cp310-* cp311-*
       CIBW_SKIP: "*musllinux*"
       CIBW_ARCHS_MACOS: x86_64 arm64 universal2
-      CIBW_ARCHS_LINUX: x86_64 i686
+      CIBW_ARCHS_LINUX: i686
       CIBW_TEST_REQUIRES: nose mock pure-sasl eventlet
       CIBW_TEST_COMMAND: echo "wheel is installed"
     steps:
@@ -32,7 +32,7 @@ jobs:
           platforms: linux/arm64
 
       - name: Build wheels
-        run: cd python-driver && pipx run cibuildwheel==2.12.1
+        run: cd python-driver && PATH=$PATH:$HOME/.cargo/bin pipx run cibuildwheel==2.12.1
 
       - uses: actions/upload-artifact@v3
         with:
