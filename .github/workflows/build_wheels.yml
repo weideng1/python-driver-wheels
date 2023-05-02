@@ -13,14 +13,18 @@ jobs:
       CIBW_BUILD: cp37-* cp38-* cp39-* cp310-* cp311-*
       CIBW_SKIP: "*musllinux*"
       CIBW_ARCHS_MACOS: x86_64 arm64 universal2
-      CIBW_ARCHS_LINUX: x86_64 aarch64
+      CIBW_ARCHS_LINUX: x86_64 i686
       CIBW_TEST_REQUIRES: nose mock pure-sasl eventlet
       CIBW_TEST_COMMAND: echo "wheel is installed"
     steps:
       - uses: actions/checkout@v3
         with:
           submodules: true
-
+      - name: Install rust toolchain
+        uses: actions-rs/toolchain@v1
+        with:
+            toolchain: stable
+            default: true
       - name: Set up QEMU
         if: runner.os == 'Linux'
         uses: docker/setup-qemu-action@v2
