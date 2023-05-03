@@ -26,7 +26,8 @@ jobs:
       CIBW_ARCHS_MACOS: ${{ github.event.inputs.cibw_archs_macos }}
       CIBW_ARCHS_LINUX: ${{ github.event.inputs.cibw_archs_linux }}
       CIBW_ENVIRONMENT: PATH="$HOME/.cargo/bin:$PATH"
-      CIBW_BEFORE_TEST_LINUX: curl https://sh.rustup.rs -sSf | bash -s -- -y && yum -y install https://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm && yum update -y && yum install -y openssl11-devel
+      CIBW_MANYLINUX_I686_IMAGE: quay.io/pypa/manylinux_2_24_i686
+      CIBW_BEFORE_TEST_LINUX: curl https://sh.rustup.rs -sSf | bash -s -- -y && yum update -y && yum install -y openssl-devel
       CIBW_TEST_REQUIRES: nose mock pure-sasl eventlet
       CIBW_TEST_COMMAND: echo "wheel is installed"
     steps:
