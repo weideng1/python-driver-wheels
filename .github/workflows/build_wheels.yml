@@ -6,10 +6,10 @@ on:
       cibw_build:
         description: 'CIBW_BUILD'
         default: 'cp37-* cp38-* cp39-* cp310-* cp311-*'
-      cibw_archs_macos: 'CIBW_ARCHS_MACOS'
+      cibw_archs_macos:
         description: 'CIBW_ARCHS_MACOS'
         default: 'x86_64 arm64 universal2'
-      cibw_archs_linux: 'CIBW_ARCHS_LINUX'
+      cibw_archs_linux:
         description: 'CIBW_ARCHS_LINUX'
         default: 'x86_64 i686 aarch64'
 
