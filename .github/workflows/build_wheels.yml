@@ -1,6 +1,17 @@
 name: Build wheels
 
-on: [workflow_dispatch]
+on:
+  workflow_dispatch:
+    inputs:
+      cibw_build:
+        description: 'CIBW_BUILD'
+        default: 'cp37-* cp38-* cp39-* cp310-* cp311-*'
+      cibw_archs_macos: 'CIBW_ARCHS_MACOS'
+        description: 'CIBW_ARCHS_MACOS'
+        default: 'x86_64 arm64 universal2'
+      cibw_archs_linux: 'CIBW_ARCHS_LINUX'
+        description: 'CIBW_ARCHS_LINUX'
+        default: 'x86_64 i686 aarch64'
 
 jobs:
   build_wheels:
@@ -8,12 +19,12 @@ jobs:
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
-        os: [ubuntu-20.04]
+        os: [ubuntu-20.04, windows-2019, macos-11]
     env:
-      CIBW_BUILD: cp37-* cp38-* cp39-* cp310-* cp311-*
+      CIBW_BUILD: ${{ github.event.inputs.cibw_build }}
       CIBW_SKIP: "*musllinux*"
-      CIBW_ARCHS_MACOS: x86_64 arm64 universal2
-      CIBW_ARCHS_LINUX: i686
+      CIBW_ARCHS_MACOS: ${{ github.event.inputs.cibw_archs_macos }}
+      CIBW_ARCHS_LINUX: ${{ github.event.inputs.cibw_archs_linux }}
       CIBW_ENVIRONMENT: PATH="$HOME/.cargo/bin:$PATH"
       CIBW_BEFORE_TEST_LINUX: curl https://sh.rustup.rs -sSf | bash -s -- -y && yum install -y epel-release && yum update -y && yum install -y openssl11-devel
       CIBW_TEST_REQUIRES: nose mock pure-sasl eventlet
